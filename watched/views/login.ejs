@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                        <div class="card-body p-5">
+                            <div class="mb-md-2 mt-md-2 pb-4">
+                                <div class="text-center">
+                                    <h2 class="fw-bold mb-2 text-uppercase">
+                                        <%= title %>
+                                    </h2>
+                                    <p class="text-white-50 mb-3">Please sign in</p>
+                                </div>
+
+                                <% if (fail) { %>
+                                    <section class="alert alert-danger mt-0 py-1" role="alert">
+                                        <p class="text-center my-auto">Incorrect email or password.</p>
+                                    </section>
+                                <% } %>
+
+                                <form action="/auth/login" method="POST">
+                                    <div class="form-outline form-white mb-4">
+                                        <label for="email" class="form-label text-left">Email address</label>
+                                        <input type="email" id="email" name="email"
+                                            class="form-control form-control-lg"
+                                            placeholder="example@example.com" />
+                                    </div>
+
+                                    <div class="form-outline form-white mb-4">
+                                        <label for="passwd" class="form-label text-left">Password</label>
+                                        <input type="password" id="passwd" name="passwd"
+                                            class="form-control form-control-lg"
+                                            placeholder="Keep it secret!" />
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button class="btn btn-outline-light btn-lg px-5"
+                                            type="submit">Login</button>
+                                    </div>
+                                    <input id="hiddenURL" type="hidden" name="prevPage">
+                                </form>
+                            </div>
+                            <div>
+                                <p class="mb-0 text-center">Don't have an account? <a href="/signup"
+                                        class="text-white-50 fw-bold">Sign Up</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript">
+        if (sessionStorage.getItem('prevPage')) {
+            document.getElementById('hiddenURL').setAttribute('value', sessionStorage.getItem('prevPage'));
+            sessionStorage.removeItem('prevPage');
+        }
+    </script>
+</body>
+</html>

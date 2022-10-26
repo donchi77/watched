@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Rigamonti Andrea" />
+    <meta name="description" content="WebSite to organize your passion for Cinema and TV-Series" />
+    <meta name="keywords" content="Film Cinema TV-Series" />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <title><%= title %></title>
+</head>
+<body>
+    <header class="p-3 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <span class="text-uppercase"><%= title %></span>
+                </a>
+                <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"></div>
+                <div class="text-end">
+                    <% if (!id) { %>
+                    <div class="d-flex justify-content-start">
+                        <a href="/login"><button type="submit" class="btn btn-outline-light me-2">Login</button></a>
+                        <a href="/signup"><button type="submit" class="btn btn-primary">Sign-up</button></a>
+                    </div>
+                    <% } else { %>
+                    <div class="d-flex justify-content-start">
+                        <a href="/user"><button type="submit" class="btn btn-outline-light me-2">My
+                                Profile</button></a>
+                        <form action="/auth/logout" method="POST">
+                            <button type="submit" class="btn btn-outline-light me-2">Logout</button>
+                        </form>
+                    </div>
+                    <% }%>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="display-4 fw-bold text-uppercase text-center text-dark mt-4 mb-0"><%= title %></h1>
+        <p class="lead text-center">WebSite to organize your passion for Cinema and TV-Series</p>
+        <form id="search-film-form" action="/search" method="GET" class="container input-group input-group-lg mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg>
+            </span>
+            <input name="title" id="txt-media-name" placeholder="Search here" type="search" class="form-control">
+        </form>
+
+        <% if (errors) { %>
+            <div class="d-flex justify-content-center">
+                <div class="w-25 alert alert-danger mt-0 py-1" role="alert">
+                    <% errors.forEach(error => { %>
+                    <p class="text-center my-auto"><%= error.msg %></p>
+                    <% }); %>
+                </div>
+            </div>
+        <% } %>
+    </main>
+</body>
+
+</html>

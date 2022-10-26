@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Rigamonti Andrea" />
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <title><%= data.Title %></title>
+</head>
+<body>
+    <header class="p-3 bg-dark text-white sticky-top">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <span class="text-uppercase">Watched</span>
+                </a>
+                <div class="col-12 col-lg-auto mx-auto mb-2 justify-content-center mb-md-0">
+                    <form class="d-flex input-group" action="/search" method="GET">
+                        <input class="form-control" type="text" name="title" id="txt-media-name" 
+                            placeholder="Search here" aria-label="Search">
+                    </form>
+                </div>
+                <div class="text-end">
+                    <% if (!id) { %>
+                        <div class="d-flex justify-content-start">
+                            <a href="/login"><button type="submit" class="btn btn-outline-light me-2">Login</button></a>
+                            <a href="/signup"><button type="submit" class="btn btn-primary">Sign-up</button></a>
+                        </div>
+                    <% } else { %>
+                        <div class="d-flex justify-content-start">
+                            <a href="/user"><button type="submit" class="btn btn-outline-light me-2">My
+                                    Profile</button></a>
+                            <form action="/auth/logout" method="POST">
+                                <button type="submit" class="btn btn-outline-light me-2">Logout</button>
+                            </form>
+                        </div>
+                    <% }%>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mt-4 ">
+        <div class="row row-cols-2">
+            <div class="col-6 col-md-2">
+                <img class="img-fluid rounded" alt="Picture <%= data.Title %>"src="<%= data.Poster %>">
+                <div class="d-grip gap-2 d-md-block mt-2 ">
+                    <button id="btn-towatch" class="btn btn-outline-dark" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add to watch!">
+                        <svg id="svg-tw" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                            <path id="iw0" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                        </svg>
+                    </button>
+                    <button id="btn-watched" class="btn btn-outline-dark" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add to watched!">
+                        <svg id="svg-w" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                            <path id="iw1" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                            <path id="iw2" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="row row-cols-1">
+                <div class="col">
+                    <h1 class="display-6"><%= data.Title %></h1>
+                    <p class="lead"><em><%= data.Plot %></em></p>
+                </div>
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <caption>
+                                All information are provided by <a target="_blank" rel="noopener" href="https://rapidapi.com/rapidapi/api/movie-database-imdb-alternative/">Movie Database API</a>
+                            </caption>
+                            <thead>
+                                <tr><th scope="col" colspan="2">General information</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Year:</th>
+                                    <td><%= data.Year %></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Released date:</th>
+                                    <td><%= data.Released %></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Genre:</th>
+                                    <td><%= data.Genre %></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Runtime:</th>
+                                    <td><%= data.Runtime %></td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Production:</th>
+                                    <td><%= data.Production %></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Director & Writers:</th>
+                                    <td><%= data.Director %>, <%= data.Writer %></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Actors:</th>
+                                    <td><%= data.Actors %></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/javascripts/xhr_request.js"></script>
+    <% if (id) { %>
+        <script type="text/javascript">
+            window.onload = () => {
+                checkStatus('<%= idFilm %>');
+            };
+            document.getElementById('btn-towatch').addEventListener('click', event => {
+                addFilm('<%= idFilm %>', '<%= data.Title %>', 0, '<%= data.Poster %>');
+            });
+            document.getElementById('btn-watched').addEventListener('click', event => {
+                addFilm('<%= idFilm %>', '<%= data.Title %>', 1, '<%= data.Poster %>');
+            });
+        </script>
+    <% } else { %>
+        <script type="text/javascript">
+            document.getElementById('btn-towatch').addEventListener('click', redirectToLoginPage)
+            document.getElementById('btn-watched').addEventListener('click', redirectToLoginPage);
+
+            function redirectToLoginPage() {
+                sessionStorage.setItem('prevPage', location.href);
+                location.replace('/login');
+            }
+        </script>
+    <% } %>
+</body>
+</html>

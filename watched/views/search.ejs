@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Rigamonti Andrea" />
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <title><%= title %></title>
+</head>
+<body>
+    <header class="p-3 bg-dark text-white sticky-top">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <span class="text-uppercase">Watched</span>
+                </a>
+                <div class="col-12 col-lg-auto mx-auto mb-2 justify-content-center mb-md-0">
+                    <form class="d-flex input-group" action="/search" method="GET">
+                        <input class="form-control" type="text" name="title" id="txt-media-name" 
+                            placeholder="Search here" aria-label="Search">
+                    </form>
+                </div>
+                <div class="text-end">
+                    <% if (!id) { %>
+                        <div class="d-flex justify-content-start">
+                            <a href="/login"><button type="submit" class="btn btn-outline-light me-2">Login</button></a>
+                            <a href="/signup"><button type="submit" class="btn btn-primary">Sign-up</button></a>
+                        </div>
+                    <% } else { %>
+                        <div class="d-flex justify-content-start">
+                            <a href="/user"><button type="submit" class="btn btn-outline-light me-2">My
+                                    Profile</button></a>
+                            <form action="/auth/logout" method="POST">
+                                <button type="submit" class="btn btn-outline-light me-2">Logout</button>
+                            </form>
+                        </div>
+                    <% }%>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <% if (data.Response == 'True') { %>
+        <main class="container mt-5">
+            <div class="row row-cols-5 mw-100 mh-100 mx-3 my-5">
+                <%  
+                    data.Search.forEach(element => {
+                        if (element.Poster != 'N/A') { %>
+                            <div class="col shadow">
+                                <a href="/film/:<%= element.imdbID %>">
+                                    <img id="<%= element.imdbID %>" class="img-fluid rounded" 
+                                        alt="Picture <%= element.Title %>"src="<%= element.Poster %>">
+                                </a>
+                            </div>
+                        <% } %>
+                    <% });
+                %>
+            </div>
+        </main>
+    <% } else { %>
+        <main class="flex-shrink-0 text-center">
+            <div class="container">
+                <h1 class="mt-4"> <%= data.Error %> </h1>
+                <p class="lead">Please check if the movie or TV-series title is correct. If it is, we apalogize
+                    for the inconvenience.
+                </p>
+                <p>Go back to the <a href="/">home page</a> for other films!</p>
+            </div>
+        </main>
+    <% }%>
+    <div class="d-flex justify-content-end mb-2 me-2">
+        <button type="button" class="btn btn-danger" id="btn-back-to-top">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+            </svg>
+        </button>
+    </div>
+    <script src="/javascripts/back_to_top.js"></script>
+</body>
+</html>
